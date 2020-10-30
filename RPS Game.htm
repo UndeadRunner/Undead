@@ -1,0 +1,195 @@
+<html>
+<head>
+<title>Jake's Rock, Paper, Scissors Game</title>
+<script type="text/javascript">
+    var player1results = new Array (0,0,0,0,0);
+    var player2results = new Array (0,0,0,0,0);
+    var game = 0;
+
+    function reset()
+    {
+        // Reset game index and player result arrays
+        game = 0;
+        player1results = [0,0,0,0,0];
+        player2results = [0,0,0,0,0];
+        document.getElementById("result").innerHTML = "";
+    }
+
+    function playGame()
+    {
+        // Check if oplayer has already played 5 games
+        if (game > 4)
+        {
+            reset();
+        }
+
+        // Variables for game play
+        var player1 = document.getElementById("player1").value;
+        var player2 = document.getElementById("player2").value;
+        var result = "";
+
+        if (player1.toUpperCase() == "R" || player1.toUpperCase() == "ROCK") 
+        {
+            if (player2.toUpperCase() == "R" || player2.toUpperCase() == "ROCK") 
+            {
+                player1results[game] = 0;
+                player2results[game] = 0;
+                result = "TIE!";
+            }
+            else if (player2.toUpperCase() == "P" || player2.toUpperCase() == "PAPER") 
+            {
+                player1results[game] = 0;
+                player2results[game] = 1;
+                result = "PLAYER 2 WINS!";
+            }
+            else if (player2.toUpperCase() == "S" || player2.toUpperCase() == "SCISSORS")
+            {
+                player1results[game] = 1;
+                player2results[game] = 0;
+                result = "PLAYER 1 WINS!";
+            }
+            else 
+            {
+                result =  "INVALID MOVE!";
+            }
+        }
+        else if (player1.toUpperCase() == "P" || player1.toUpperCase() == "PAPER") 
+        {
+            if (player2.toUpperCase() == "R" || player2.toUpperCase() == "ROCK") 
+            {
+                player1results[game] = 1;
+                player2results[game] = 0;
+                result =  "PLAYER 1 WINS!";
+            }
+            else if (player2.toUpperCase() == "P" || player2.toUpperCase() == "PAPER") 
+            {
+                player1results[game] = 0;
+                player2results[game] = 0;
+                result =  "TIE!";
+            }
+            else if (player2.toUpperCase() == "S" || player2.toUpperCase() == "SCISSORS")
+            {
+                player1results[game] = 0;
+                player2results[game] = 1;
+                result =  "PLAYER 2 WINS!";
+            }
+            else 
+            {
+                result =  "INVALID MOVE!";
+            }
+        }
+        else if (player1.toUpperCase() == "S" || player1.ToUpper == "SCISSORS") 
+        {
+            if (player2.toUpperCase() == "R" || player2.toUpperCase() == "ROCK") 
+            {
+                player1results[game] = 0;
+                player2results[game] = 1;
+                result =  "PLAYER 2 WINS!";
+            }
+            else if (player2.toUpperCase() == "P" || player2.toUpperCase() == "PAPER") 
+            {
+                player1results[game] = 1;
+                player2results[game] = 0;
+                result =  "PLAYER 1 WINS!";
+            }
+            else if (player2.toUpperCase() == "S" || player2.toUpperCase() == "SCISSORS")
+            {
+                player1results[game] = 0;
+                player2results[game] = 0;
+                result =  "TIE!";
+            }
+            else 
+            {
+                result = "INVALID MOVE!";
+            }
+        }
+        else 
+        { 
+            result = "INVALID MOVE!";
+        }
+
+        // Increment game count
+        game = game + 1;
+
+        // Display game results
+        document.getElementById("result").innerHTML = 
+            document.getElementById("result").innerHTML + "<br/>GAME " + game + " RESULT: " + result;
+
+        // Check if this is a valid move
+        if (result == "INVALID MOVE!")
+        {
+            // Invalid move, so decrement the game counter and don't count the result
+            game = game - 1;
+        }
+
+        // Check if this is the final move
+        if (game == 5)
+        {
+            // Calculate final score for each player 
+            var player1score = 0;
+            var player2score = 0;
+
+            for (var i = 0; i < player1results.length; ++i)
+            {
+                if (player1results[i] == 1)
+                {
+                    player1score = player1score + 1;
+                }
+            }
+
+            for (var i = 0; i < player2results.length; ++i)
+            {
+                if (player2results[i] == 1)
+                {
+                    player2score = player2score + 1;
+                }
+            }
+
+            // Determine the overall winner
+            var winner = "";
+            if (player1score > player2score)
+            {
+                winner = "PLAYER 1 WINS " + player1score + " TO " + player2score;
+            }
+            else if (player2score > player1score)
+            {
+                winner = "PLAYER 2 WINS " + player2score + " TO " + player1score;
+            }
+            else if (player1score == player2score)
+            {
+                winner = "TIE!!!";
+            }
+-
+            // Print the final result
+            document.getElementById("result").innerHTML = 
+                document.getElementById("result").innerHTML + "<br/><b>FINAL RESULT: </b> " + winner;
+
+        }
+    }
+</script>
+</head>
+<body>
+    <h1>Rock, Paper, Scissors</h1>
+    <p><strong>Instructions</strong>: Enter a value of R, P, or S. Then click the "Play Game" button</p>
+    <hr/>
+    <div style="text-align: center; margin-left:auto; margin-right:auto; width:400px;">
+        <div>
+            <strong>Player 1 Selection:</strong><br/>
+            <input type="text" id="player1" />
+        </div>
+        <div>
+            <strong>Player 2 Selection:</strong><br/>
+            <input type="text" id="player2" />
+        </div>
+        <div>
+            <input type="submit" value="Play Game" onclick="playGame()" />
+            <input type="button" value="Reset" onclick="reset()" />
+        </div>
+        <div id="result">
+
+        </div>
+    </div>
+    <hr/>
+    Game by Jake Bidwell 
+</body>
+</html>
