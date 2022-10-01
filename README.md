@@ -1,2 +1,2 @@
-# jakebidwell
+# jake
 * Programming Assignments
